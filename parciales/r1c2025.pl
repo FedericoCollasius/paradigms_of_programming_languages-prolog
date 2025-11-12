@@ -6,3 +6,5 @@ sinRepetidos([]).
 sinRepetidos([X|XS]) :-
   unico([X|XS], X),
   sinRepetidos(XS).
+
+
