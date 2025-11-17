@@ -33,3 +33,31 @@ permutacion(L1, [Y|YS]) :-
   member(Y, L1),
   borrar(L1, Y, L1_),
   permutacion(L1_, YS).
+
+sublista([], _).
+sublista(S, L) :- append(P, _, L), append(_, S, P).
+
+% reparto(+L, +N, -Llistas)
+% L = [1,2,3], N = 2, [[1,2],[3]]
+% L = [], N = 3, Llistas = [[],[],[]]
+% Mal:
+% reparto(L, 1, [L]).
+% reparto(L, N, [LS|LSS]) :-
+%  N_ is N - 1,
+%  reparto(L, N_, LSS),
+%  flatten(LSS, LSS_),
+%  append(LS, LSS_, L),
+%  sublista(LS, L).
+
+reparto(L, 1, [L]).
+reparto(L, N, [LS|LSS]) :-
+  N > 1,
+  N_ is N - 1,
+  append(LS, Resto, L),
+  reparto(Resto, N_, LSS).
+
+% repartoSinVacías(+L, -LListas)
+repartoSinVacias([], []).
+repartoSinVacias(L, [[E|LS]|LSS]) :-
+  append([E|LS], Resto, L),
+  repartoSinVacias(Resto, LSS).
